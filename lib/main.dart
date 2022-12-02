@@ -187,16 +187,16 @@ class _MyAppState extends State<MyApp> {
     child: CustomScrollView(
       slivers: [
 
-      SliverPersistentHeader(
-              pinned: true,
-              delegate: SliverAppBarDelegateApp(
-              minHeight: 0.0,
-              maxHeight: 180.0, //control height banner 
-              child2: bannerSlider()
-      ),),
+      // SliverPersistentHeader(
+      //         pinned: true,
+      //         delegate: SliverAppBarDelegateApp(
+      //         minHeight: 0.0,
+      //         maxHeight: 180.0, //control height banner 
+      //         child2: bannerSlider()
+      // ),),
 
       SliverAppBar(
-                expandedHeight: 195.5,
+                expandedHeight: 236,
                 floating: false,
                 pinned: true,
                 actions: [
@@ -242,25 +242,69 @@ class _MyAppState extends State<MyApp> {
                 SizedBox(width: 250,),
                  Icon(Icons.menu)
                 ],
-                flexibleSpace: LayoutBuilder(
-                    builder: (BuildContext context, BoxConstraints constraints) {
-                  top = constraints.biggest.height;
-                  return FlexibleSpaceBar(
-                      centerTitle: true,
-                      title: AnimatedOpacity(
-                          duration: Duration(milliseconds: 300),
-                          opacity: 1.0,
-                          child: Text(
-                            top.toString(),
-                            style: TextStyle(fontSize: 12.0),
-                          )),
-                      background: bannerSlider()
-                      // Image.network(
-                      //   "https://images.unsplash.com/photo-1542601098-3adb3baeb1ec?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=5bb9a9747954cdd6eabe54e3688a407e&auto=format&fit=crop&w=500&q=60",
-                      //   fit: BoxFit.cover,
-                      // )
-                      );
-                })),
+                flexibleSpace:
+                FlexibleSpaceBar(
+            background: Column(children: <Widget>[
+              Center(
+                child: SizedBox(
+                  child: Center(
+                    child: Stack(
+                      children: <Widget>[
+                        CarouselSlider(
+                            options: CarouselOptions(
+                                autoPlay: true,
+                                autoPlayInterval: Duration(seconds: 5),
+                                enlargeCenterPage: false,
+                                aspectRatio: 2/1.2,
+                                viewportFraction: 1.0,
+                                disableCenter: true,
+                                onPageChanged: (index, reason) {
+                                  setState(() {
+                                    bannerIndex = index;
+                                  });
+                                }),
+                            items: [
+                              GestureDetector(
+                                child: Image.network(
+                                  "https://images.unsplash.com/photo-1542601098-3adb3baeb1ec?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=5bb9a9747954cdd6eabe54e3688a407e&auto=format&fit=crop&w=500&q=60",
+                                  fit: BoxFit.cover,
+                                ),
+                                onTap: () => print('clicked'),
+                              ),
+                              GestureDetector(
+                                child: Image.network(
+                                  "https://www.voicesofyouth.org/sites/voy/files/images/2019-10/atmosphere-blue-sky-clouds-912110.jpg",
+                                  fit: BoxFit.cover,
+                                ),
+                                onTap: () => print('clicked 2'),
+                              )
+                            ]),
+                      ], //<Widget>[]
+                    ), //Stack
+                  ), //Center
+                ), //SizedBox
+              ) //Cen
+            ]))
+          ),
+                //  LayoutBuilder(
+                //     builder: (BuildContext context, BoxConstraints constraints) {
+                //   top = constraints.biggest.height;
+                //   return FlexibleSpaceBar(
+                //       centerTitle: true,
+                //       title: AnimatedOpacity(
+                //           duration: Duration(milliseconds: 300),
+                //           opacity: 1.0,
+                //           child: Text(
+                //             top.toString(),
+                //             style: TextStyle(fontSize: 12.0),
+                //           )),
+                //       background: bannerSlider()
+                //       // Image.network(
+                //       //   "https://images.unsplash.com/photo-1542601098-3adb3baeb1ec?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=5bb9a9747954cdd6eabe54e3688a407e&auto=format&fit=crop&w=500&q=60",
+                //       //   fit: BoxFit.cover,
+                //       // )
+                //       );
+                // })),
                   
                   SliverList(
                     delegate: SliverChildListDelegate(buildList(50))
